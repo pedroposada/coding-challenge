@@ -135,6 +135,29 @@ function App() {
         }
       }
 
+      .report {
+        padding: 1rem;
+
+        .row {
+          padding: 0 0 1rem 0;
+        }
+
+        .total {
+          margin: 1rem 0;
+          font-weight: bold;
+        }
+
+        .warning {
+          color: orange;
+          padding: .25rem 0 0 0;
+        }
+        
+        .error {
+          color: red;
+          padding: .25rem 0 0 0;
+        }
+      }
+
 
     `}>
       
@@ -224,34 +247,34 @@ function App() {
           </div>
         ))}
 
-      </div>
-
-      <div className={'total'}>
-          TOTAL CAD$ {state.rows
-            .reduce((acc, row) => +acc + (+row.amt * +row.cur), 0)}
-      </div>
-
-      {state.rows.length > 0 &&
-        <button
-          disabled={state.rows.length < 5 || state.rows
-            .reduce((acc, row) => +acc + (+row.amt * +row.cur), 0) > 1000}
-        >
-          SUBMIT REPORT
-        </button>
-      }
-
-      {state.rows.length < 5 &&
-        <div>
-          The report must have five items
+        <div className={'total'}>
+            TOTAL CAD$ {state.rows
+              .reduce((acc, row) => +acc + (+row.amt * +row.cur), 0)}
         </div>
-      }
 
-      {state.rows
-            .reduce((acc, row) => +acc + (+row.amt * +row.cur), 0) > 1000 &&
-        <div>
-          The report is over CAD$ 1000
-        </div>
-      }
+        {state.rows.length > 0 &&
+          <button
+            disabled={state.rows.length < 5 || state.rows
+              .reduce((acc, row) => +acc + (+row.amt * +row.cur), 0) > 1000}
+          >
+            SUBMIT REPORT
+          </button>
+        }
+
+        {state.rows.length < 5 &&
+          <div className={'warning'}>
+            The report must have five items
+          </div>
+        }
+
+        {state.rows
+              .reduce((acc, row) => +acc + (+row.amt * +row.cur), 0) > 1000 &&
+          <div className={'error'}>
+            The report is over CAD$ 1000
+          </div>
+        }
+
+      </div>
 
     </div>
   );
