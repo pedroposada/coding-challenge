@@ -226,13 +226,31 @@ function App() {
 
       </div>
 
+      <div className={'total'}>
+          TOTAL CAD$ {state.rows
+            .reduce((acc, row) => +acc + (+row.amt * +row.cur), 0)}
+      </div>
+
       {state.rows.length > 0 &&
         <button
-          disabled={state.rows.length !== 5 || state.rows
+          disabled={state.rows.length < 5 || state.rows
             .reduce((acc, row) => +acc + (+row.amt * +row.cur), 0) > 1000}
         >
           SUBMIT REPORT
         </button>
+      }
+
+      {state.rows.length < 5 &&
+        <div>
+          The report must have five items
+        </div>
+      }
+
+      {state.rows
+            .reduce((acc, row) => +acc + (+row.amt * +row.cur), 0) > 1000 &&
+        <div>
+          The report is over CAD$ 1000
+        </div>
       }
 
     </div>
