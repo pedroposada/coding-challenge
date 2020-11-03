@@ -1,6 +1,12 @@
 import React from 'react'
 import {css} from 'emotion'
 
+export const currency = number => Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+}).format(number)
+
+
 const initialState = {
   rows: [],
   form: {
@@ -223,7 +229,7 @@ function App() {
 
                 dispatch({ type: actions.CLEAR_FORM })
               }}
-              disabled={!state.form.desc || !state.form.amt || state.rows.length == 5}
+              disabled={!state.form.desc || !state.form.amt || state.rows.length === 5}
             >
               SAVE
             </button>
@@ -242,14 +248,14 @@ function App() {
             
             <div>Description: {row.desc}</div>
             
-            <div>Amount: CAD$ {+row.amt * +row.cur}</div>
+            <div>Amount: CAD$ {currency(+row.amt * +row.cur)}</div>
 
           </div>
         ))}
 
         <div className={'total'}>
-            TOTAL CAD$ {state.rows
-              .reduce((acc, row) => +acc + (+row.amt * +row.cur), 0)}
+            TOTAL CAD$ {currency(state.rows
+              .reduce((acc, row) => +acc + (+row.amt * +row.cur), 0))}
         </div>
 
         {state.rows.length > 0 &&
